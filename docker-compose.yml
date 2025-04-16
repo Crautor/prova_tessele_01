@@ -1,0 +1,8 @@
+services:
+  flutter-app:
+    build: .
+    volumes:
+      - .:/app
+      - ./build:/app/build  # 🔥 Isso faz o APK ficar acessível no host
+    stdin_open: true
+    tty: true
