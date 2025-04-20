@@ -1,16 +1,54 @@
-# prova_tessele_01
+# Filmes Assistidos
 
-A new Flutter project.
+Este é um aplicativo Flutter chamado **Filmes Assistidos**, que permite aos usuários gerenciar uma lista de filmes assistidos. O aplicativo possui as seguintes funcionalidades:
 
-## Getting Started
+- **Página Inicial**: Exibe a lista de filmes assistidos.
+- **Cadastro de Filmes**: Permite adicionar novos filmes à lista.
+- **Créditos**: Exibe informações sobre os desenvolvedores ou colaboradores do projeto.
 
-This project is a starting point for a Flutter application.
+## Estrutura do Projeto
 
-A few resources to get you started if this is your first Flutter project:
+O projeto está organizado da seguinte forma:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **`lib/main.dart`**: Arquivo principal que configura o tema do aplicativo e define as rotas.
+- **Páginas**:
+  - `FilmesListPage`: Página inicial que exibe a lista de filmes.
+  - `CadastroFilmePage`: Página para cadastrar novos filmes.
+  - `CreditosPage`: Página de créditos.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Como Criar um APK
+
+Siga os passos abaixo para gerar um APK do aplicativo:
+
+### Pré-requisitos
+
+1. Certifique-se de que o Flutter está instalado em sua máquina. Caso não esteja, siga as instruções de instalação no site oficial: [Flutter Installation](https://docs.flutter.dev/get-started/install).
+2. Configure o ambiente Android (instale o Android Studio e configure o SDK).
+
+### Passos para Gerar o APK
+
+1. **Abra o terminal na raiz do projeto**:
+   ```bash
+   cd prova_tessele_01
+   ```
+
+2. **Certifique-se de que todas as dependências estão instaladas**:
+   ```bash
+   flutter pub get
+   ```
+
+3. **Compile o aplicativo para Android**:
+   Execute o comando abaixo para gerar o APK:
+   ```bash
+   flutter build apk --release
+   ```
+
+4. **Localize o APK gerado**:
+   O APK será gerado no diretório:
+   ```
+   build/app/outputs/flutter-apk/app-release.apk
+   ```
+
+5. **Teste o APK**:
+   Transfira o arquivo APK para um dispositivo Android e instale-o para testar.
+
