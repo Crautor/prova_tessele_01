@@ -55,3 +55,14 @@ Siga os passos abaixo para gerar um APK do aplicativo:
 
 5. **Teste o APK**:
    Transfira o arquivo APK para um dispositivo Android e instale-o para testar.
+
+## Capturas de tela
+![CapturaDeTelaTessele1](https://github.com/user-attachments/assets/caa24aca-3fea-4613-b619-d13c4b46a712)
+<br>
+![CapturaDeTelaTessele2](https://github.com/user-attachments/assets/fd423ed8-dfac-46e3-98cf-50f210fe9ad9)
+![CapturaDeTelaTessele3](https://github.com/user-attachments/assets/1b8a174c-7e19-49bf-8bc3-20718085eb31)
+![CapturaDeTelaTessele4](https://github.com/user-attachments/assets/696632c2-85d1-4b07-b5e9-0691e1212bfc)
+![CapturaDeTelaTessele5](https://github.com/user-attachments/assets/c373a02b-fc95-4ea4-9d20-afa90d9f5311)
+![CapturaDeTelaTessele6](https://github.com/user-attachments/assets/65aaf344-d9d7-45bd-8115-45f6cba2881c)
+![CapturaDeTelaTessele7](https://github.com/user-attachments/assets/d9b456d4-6359-47f2-9e2c-bc6f32e23561)
+![CapturaDeTelaTessele8](https://github.com/user-attachments/assets/d954d3f4-5bdd-4100-aa8f-a1e18c0dedc9)
