@@ -14,6 +14,7 @@ class CadastroFilmePage extends StatefulWidget {
 class _CadastroFilmePageState extends State<CadastroFilmePage> {
   final _tituloController = TextEditingController();
   final _dataController = TextEditingController();
+  bool _assistido = false;
 
   void _preencherDataHoje() {
     final hoje = DateFormat('dd/MM/yyyy').format(DateTime.now());
@@ -23,15 +24,19 @@ class _CadastroFilmePageState extends State<CadastroFilmePage> {
   Future<void> _adicionarFilme() async {
     final titulo = _tituloController.text;
     final data = _dataController.text;
-    if (titulo.isEmpty || data.isEmpty) return;
+    if (titulo.isEmpty || (_assistido && data.isEmpty)) return;
 
     final prefs = await SharedPreferences.getInstance();
     final String? json = prefs.getString('filmesAssistidos');
-    final List<Map<String, dynamic>> filmes = json != null
-        ? List<Map<String, dynamic>>.from(jsonDecode(json))
-        : [];
+    final List<Map<String, dynamic>> filmes =
+        json != null ? List<Map<String, dynamic>>.from(jsonDecode(json)) : [];
 
-    filmes.add({'titulo': titulo, 'data': data});
+    filmes.add({
+      'titulo': titulo,
+      'data': _assistido ? data : null,
+      'assistido':
+          _assistido, // Garante que a flag assistido seja salva corretamente
+    });
     await prefs.setString('filmesAssistidos', jsonEncode(filmes));
 
     Navigator.pop(context); // volta para a tela principal
@@ -54,27 +59,34 @@ class _CadastroFilmePageState extends State<CadastroFilmePage> {
                 'Menu',
                 style: TextStyle(color: Colors.white, fontSize: 24),
               ),
-              decoration: BoxDecoration(
-                color: Colors.black,
-              ),
+              decoration: BoxDecoration(color: Colors.black),
             ),
             ListTile(
               leading: const Icon(Icons.home, color: Colors.white),
-              title: const Text('Tela Principal', style: TextStyle(color: Colors.white)),
+              title: const Text(
+                'Tela Principal',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/');
               },
             ),
             ListTile(
               leading: const Icon(Icons.add, color: Colors.white),
-              title: const Text('Adicionar Filme', style: TextStyle(color: Colors.white)),
+              title: const Text(
+                'Adicionar Filme',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/cadastro');
               },
             ),
             ListTile(
               leading: const Icon(Icons.info, color: Colors.white),
-              title: const Text('Créditos', style: TextStyle(color: Colors.white)),
+              title: const Text(
+                'Créditos',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/creditos');
               },
@@ -103,41 +115,65 @@ class _CadastroFilmePageState extends State<CadastroFilmePage> {
             const SizedBox(height: 8),
             Row(
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _dataController,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      labelText: 'Data (dd/MM/yyyy)',
-                      labelStyle: TextStyle(color: Colors.white70),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white38),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.teal),
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                    onTap: () async {
-                      final picked = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2100),
-                      );
-                      if (picked != null) {
-                        _dataController.text =
-                            DateFormat('dd/MM/yyyy').format(picked);
-                      }
-                    },
-                  ),
+                const Text(
+                  'Assistido:',
+                  style: TextStyle(color: Colors.white70),
                 ),
-                IconButton(
-                  onPressed: _preencherDataHoje,
-                  icon: Icon(Icons.today, color: Colors.teal),
+                Switch(
+                  value: _assistido,
+                  onChanged: (value) {
+                    setState(() {
+                      _assistido = value;
+                      if (!_assistido) {
+                        _dataController
+                            .clear(); // Limpa a data se desmarcar como assistido
+                      }
+                    });
+                  },
+                  activeColor: Colors.teal,
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+            if (_assistido) // Esconde o input de data se o switch não estiver ativado
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _dataController,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        labelText: 'Data (dd/MM/yyyy)',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white38),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.teal),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                      onTap: () async {
+                        final picked = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                        );
+                        if (picked != null) {
+                          _dataController.text = DateFormat(
+                            'dd/MM/yyyy',
+                          ).format(picked);
+                        }
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: _preencherDataHoje,
+                    icon: Icon(Icons.today, color: Colors.teal),
+                  ),
+                ],
+              ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: _adicionarFilme,
